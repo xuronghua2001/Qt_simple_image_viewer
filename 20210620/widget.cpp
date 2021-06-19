@@ -3,17 +3,11 @@
 #include<QFileDialog>
 #include<QPainter>
 #include<QPixmap>
-#include<QPicture>
-#include <QVBoxLayout>
-#include<QDebug>
-#include<QStandardItem>
 #include<QFileInfo>
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Widget)
 {
-
-
     ui->setupUi(this);
 }
 Widget::~Widget()
@@ -22,9 +16,7 @@ Widget::~Widget()
 }
 static int r,real_w,real_h,row;
 static int w=0,h=0,j=0;
-static QString name=":/image/img/1.jpg";
-static QString row_num;
-static QFileInfoList list;
+QString name=":/image/img/1.jpg";
 void Widget::on_pushButton_clicked()
 {
     QStringList filterList;
@@ -34,14 +26,14 @@ void Widget::on_pushButton_clicked()
     QDir *fileDir=new QDir(filename);
     if(fileDir->isEmpty())
             QMessageBox::information(nullptr,"错误提示","必须指定非空目录");
-     QFileInfoList list=fileDir->entryInfoList();
-     for(int i= 0; i != list.size(); i++)
+    QFileInfoList list=fileDir->entryInfoList();
+    for(int i= 0; i != list.size(); i++)
         {
          QFileInfo f;
          f=list.at(i);
          QString  fi;
          fi=f.suffix();
-             if( (fi != "jpg") && (fi != "jpeg") &&(fi != "png") )
+             if( (fi!= "jpg")&&(fi!= "jpeg")&&(fi!= "png")&&(fi!= "bmp"))
              {
                  continue;
              }
@@ -73,8 +65,6 @@ void Widget::paintEvent(QPaintEvent *)
     pixmap=pixmap.scaled(real_w+w,real_h+h,Qt::KeepAspectRatio);
     painter.drawPixmap(260,10,pixmap);
 }
-
-
 void Widget::on_pushButton_4_clicked()
 {
     QString infoList;
@@ -84,12 +74,11 @@ void Widget::on_pushButton_4_clicked()
 
               infoList += tr("文件名称: %1 \n").arg(info.fileName());
               infoList += tr("文件大小: %1 Bytes\n").arg(info.size());
-  //            infoList += tr("修改时间: %1 \n").arg(info.lastModified().toString("yyyy-MM-dd hh:mm:ss"));
-  //            infoList += tr("读取时间: %1 \n").arg(info.lastRead().toString("yyyy-MM-dd hh:mm:ss"));
+              infoList += tr("修改时间: %1 \n").arg(info.lastModified().toString("yyyy-MM-dd hh:mm:ss"));
+              infoList += tr("读取时间: %1 \n").arg(info.lastRead().toString("yyyy-MM-dd hh:mm:ss"));
               ui->label->setText(infoList);
            }
 }
-
 void Widget::on_pushButton_2_clicked()
 {
     if(j&&r!=0){
@@ -98,7 +87,6 @@ void Widget::on_pushButton_2_clicked()
    name=lastIndex.data().toString();
     update();}
 }
-
 void Widget::on_pushButton_3_clicked()
 {
     if(j&&r!=row-1){
@@ -109,27 +97,23 @@ void Widget::on_pushButton_3_clicked()
      update();}
 
 }
-
 void Widget::on_pushButton_5_clicked()
 {
     w+=20;
     h+=20;
     update();
 }
-
 void Widget::on_pushButton_6_clicked()
 {
     w-=20;
     h-=20;
     update();
 }
-
 void Widget::on_pushButton_8_clicked()
 {
     w=0;h=0;
     update();
 }
-
 void Widget::on_pushButton_7_clicked()
 {
     w=this->width()-275-real_w;
