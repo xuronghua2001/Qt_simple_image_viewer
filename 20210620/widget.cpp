@@ -16,12 +16,12 @@ Widget::~Widget()
 }
 static int r,real_w,real_h,row;
 static int w=0,h=0,j=0;
-QString name=":/image/img/1.jpg";
+QString name=":/image/img/0.jpg";
 void Widget::on_pushButton_clicked()
 {
     QStringList filterList;
     QStringList fileNameList;
-    filterList << "*.gif" << "*.jpg" << "*.png" << "*.bmp";
+    filterList << "*.gif" << "*.jpg" << "*.png" << "*.bmp" << "*.jpeg";
     QString filename=QFileDialog::getExistingDirectory(nullptr,"选源文件夹");
     QDir *fileDir=new QDir(filename);
     if(fileDir->isEmpty())
@@ -33,7 +33,7 @@ void Widget::on_pushButton_clicked()
          f=list.at(i);
          QString  fi;
          fi=f.suffix();
-             if( (fi!= "jpg")&&(fi!= "jpeg")&&(fi!= "png")&&(fi!= "bmp"))
+             if( (fi!= "jpg")&&(fi!= "jpeg")&&(fi!= "png")&&(fi!= "bmp")&&(fi!= "gif"))
              {
                  continue;
              }
