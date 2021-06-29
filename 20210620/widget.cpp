@@ -19,10 +19,8 @@ static int w=0,h=0,j=0;
 QString name=":/image/img/0.jpg";
 void Widget::on_pushButton_clicked()
 {
-    QStringList filterList;
     QStringList fileNameList;
-    filterList << "*.gif" << "*.jpg" << "*.png" << "*.bmp" << "*.jpeg";
-    QString filename=QFileDialog::getExistingDirectory(nullptr,"选源文件夹");
+    QString filename=QFileDialog::getExistingDirectory(this,"选源文件夹");
     QDir *fileDir=new QDir(filename);
     if(fileDir->isEmpty())
             QMessageBox::information(nullptr,"错误提示","必须指定非空目录");
@@ -33,7 +31,7 @@ void Widget::on_pushButton_clicked()
          f=list.at(i);
          QString  fi;
          fi=f.suffix();
-             if( (fi!= "jpg")&&(fi!= "jpeg")&&(fi!= "png")&&(fi!= "bmp")&&(fi!= "gif"))
+             if( (fi!="jpg")&&(fi!="jpeg")&&(fi!="png")&&(fi!="bmp")&&(fi!="gif")&&(fi!="JPG")&&(fi!="JPEG")&&(fi!="PNG")&&(fi!="BMP")&&(fi!="GIF"))
              {
                  continue;
              }
@@ -71,9 +69,9 @@ void Widget::on_pushButton_4_clicked()
     QFileInfo info(name);
            if (info.exists())
             {
-
+              infoList += tr("文件格式: %1 \n").arg(info.suffix());
               infoList += tr("文件名称: %1 \n").arg(info.fileName());
-              infoList += tr("文件大小: %1 Bytes\n").arg(info.size());
+              infoList += tr("文件大小: %1 KB\n").arg(info.size()/1024);
               infoList += tr("修改时间: %1 \n").arg(info.lastModified().toString("yyyy-MM-dd hh:mm:ss"));
               infoList += tr("读取时间: %1 \n").arg(info.lastRead().toString("yyyy-MM-dd hh:mm:ss"));
               ui->label->setText(infoList);
