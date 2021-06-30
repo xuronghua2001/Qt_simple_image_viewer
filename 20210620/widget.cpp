@@ -21,9 +21,9 @@ void Widget::on_pushButton_clicked()
 {
     QStringList fileNameList;
     QString filename=QFileDialog::getExistingDirectory(this,"选源文件夹");
+    name=nullptr;
     QDir *fileDir=new QDir(filename);
-    if(fileDir->isEmpty())
-            QMessageBox::information(nullptr,"错误提示","必须指定非空目录");
+    if (!fileDir->isEmpty()){
     QFileInfoList list=fileDir->entryInfoList();
     for(int i= 0; i != list.size(); i++)
         {
@@ -43,25 +43,28 @@ void Widget::on_pushButton_clicked()
      ui->listView->setEditTriggers(QAbstractItemView::NoEditTriggers);
      j=1;QModelIndex Index=ui->listView->model()->index(1,0);
      r=Index.row();
-     row=ui->listView->model()->rowCount();
-
+     row=ui->listView->model()->rowCount();}
+     if (name==nullptr)
+        QMessageBox::information(nullptr,"错误提示","指定目录中没有图片\n请重试！");
 }
 
 void Widget::on_listView_doubleClicked(QModelIndex index)
 {
+     w=0,h=0;
      name=index.data().toString();
      r=index.row();
      update();
 }
 void Widget::paintEvent(QPaintEvent *)
 {
-    QPainter painter(this);
+    if(name!=nullptr)
+    {QPainter painter(this);
     QImage image(name);
     real_w=image.width();
     real_h=image.height();
     QPixmap pixmap=QPixmap::fromImage(image);
     pixmap=pixmap.scaled(real_w+w,real_h+h,Qt::KeepAspectRatio);
-    painter.drawPixmap(260,10,pixmap);
+    painter.drawPixmap(260,10,pixmap);}
 }
 void Widget::on_pushButton_4_clicked()
 {
