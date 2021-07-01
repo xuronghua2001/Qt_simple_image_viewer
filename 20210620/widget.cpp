@@ -19,8 +19,10 @@ static int w=0,h=0,j=0;
 QString name=":/image/img/0.jpg";
 void Widget::on_pushButton_clicked()
 {
+    QFileInfo f("image.qrc");
+    QString qrc_path=f.absolutePath();
     QStringList fileNameList;
-    QString filename=QFileDialog::getExistingDirectory(this,"选源文件夹");
+    QString filename=QFileDialog::getExistingDirectory(this,"选源文件夹",qrc_path);
     name=nullptr;
     QDir *fileDir=new QDir(filename);
     if (!fileDir->isEmpty()){
@@ -77,6 +79,7 @@ void Widget::on_pushButton_4_clicked()
               infoList += tr("文件大小: %1 KB\n").arg(info.size()/1024);
               infoList += tr("修改时间: %1 \n").arg(info.lastModified().toString("yyyy-MM-dd hh:mm:ss"));
               infoList += tr("读取时间: %1 \n").arg(info.lastRead().toString("yyyy-MM-dd hh:mm:ss"));
+              infoList += tr("图片尺寸: %1 \n").arg(QString::number(real_w,'i',0) +"*"+ QString::number(real_h,'i',0));
               ui->label->setText(infoList);
            }
 }
